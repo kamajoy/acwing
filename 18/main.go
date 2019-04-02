@@ -23,8 +23,7 @@ import "fmt"
    15   7
 */
 func main() {
-	//root := TreeNode{Val: 3, Left: &TreeNode{Val: 9}, Right: &TreeNode{Val: 20, Left: &TreeNode{Val: 15}, Right: &TreeNode{Val: 7}}}
-	tree := buildTree([]int{3, 9, 20, 15, 7}, []int{9, 3, 15, 20, 7})
+	tree := BuildTree([]int{3, 9, 20, 15, 7}, []int{9, 3, 15, 20, 7})
 	fmt.Println(tree)
 }
 
@@ -36,10 +35,10 @@ type TreeNode struct {
 
 var pos = make(map[int]int, 0)
 
-func buildTree(preorder []int, inorder []int) *TreeNode {
+func BuildTree(preorder []int, inorder []int) *TreeNode {
 	n := len(preorder)
-	for i := 0; i < n; i++ {
-		pos[inorder[i]] = i
+	for k, v := range inorder {
+		pos[v] = k
 	}
 	return construct(preorder, inorder, 0, n-1, 0, n-1)
 }
@@ -52,7 +51,7 @@ func construct(preorder []int, inorder []int, pl, pr, il, ir int) *TreeNode {
 	k := pos[preorder[pl]] - il
 
 	result := &TreeNode{
-		Val: preorder[k],
+		Val: preorder[pl],
 	}
 
 	result.Left = construct(preorder, inorder, pl+1, pl+k, il, il+k-1)
